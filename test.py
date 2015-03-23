@@ -42,26 +42,6 @@ class ShrinkRayTestCase(unittest.TestCase):
         assert shrink_sizes == [100, 200]
         shrink_sizes = theshrinkray.image_sizes(100, 200, 3)
         assert shrink_sizes == [100, 150, 200]
-    #
-    # def test_creates_image_array(self):
-    #     img = get_image_file()
-    #     sizes = theshrinkray.image_sizes(100, 2000, 4)
-    #     image_array = theshrinkray.resize_from_sizes(img, sizes)
-    #     assert len(image_array) == 5
-    #
-    # def test_image_array_contains_filenames(self):
-    #     img = get_image_file()
-    #     sizes = theshrinkray.image_sizes(100, 2000, 4)
-    #     image_array = theshrinkray.resize_from_sizes(img, sizes)
-    #     for image in image_array:
-    #         assert os.access(image, os.F_OK) is True
-    #
-    # def test_zipfile_has_name(self):
-    #     img = get_image_file()
-    #     sizes = theshrinkray.image_sizes(100, 2000, 4)
-    #     image_array = theshrinkray.resize_from_sizes(img, sizes)
-    #     zipname = theshrinkray.zip_from_filenames(image_array)
-    #     assert os.access(zipname, os.F_OK) is True
 
     def test_make_zipfile_from_image_creates_file(self):
         img = get_image_file()

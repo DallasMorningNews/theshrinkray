@@ -23,42 +23,6 @@ def image_sizes(min, max, steps):
         sizes.append(int(size))
     return sizes
 
-# def resize_from_sizes(file, sizes):
-#     image = Image.open(file)
-#     path, file_name = os.path.split(file.name)
-#     base, ext = os.path.splitext(file_name)
-#     # print path, base, ext
-#     image_name = "{}{}".format(base, ext)
-#     rand = ''.join(random.sample(string.letters, 15))
-#     os.mkdir(os.path.join('temp',rand))
-#     filepath = os.path.join('temp', rand, image_name)
-#     image.save(filepath)
-#     images = [filepath]
-#     for size in sizes:
-#         image_name = "{}_{}{}".format(base, size, ext)
-#         filepath = os.path.join('temp', rand, image_name)
-#         img = ResizeToFit(width=size, upscale=True).process(image)
-#         img.save(filepath)
-#         img.close()
-#         images.append(filepath)
-#     image.close()
-#     return images
-#
-# def zip_from_filenames(images):
-#     rand = ''.join(random.sample(string.letters, 15))
-#     path, file_name = os.path.split(images[0])
-#     base, ext = os.path.splitext(file_name)
-#     zip_name = "{}.zip".format(base)
-#     os.mkdir(os.path.join('temp',rand))
-#     zip_path = os.path.join('temp', rand, zip_name)
-#     with ZipFile(zip_path, 'w') as zipfile:
-#         for image in images:
-#             path, basename = os.path.split(image)
-#             zipfile.write(image, basename)
-#             os.remove(image)
-#     return zip_path
-
-
 def zip_from_image(file, sizes):
     rand = ''.join(random.sample(string.letters, 15))
     os.mkdir(os.path.join(dir, 'temp',rand))
