@@ -49,6 +49,10 @@ class ShrinkRayTestCase(unittest.TestCase):
         zipname = theshrinkray.zip_from_image(img, sizes)
         assert os.access(zipname, os.F_OK) is True
 
+    def test_main_link_returns_200(self):
+        req = self.app.get('/')
+        assert req.status_code == 200
+
 
 if __name__ == '__main__':
     unittest.main()
