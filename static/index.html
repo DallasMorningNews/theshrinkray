@@ -24,12 +24,29 @@
         padding: 40px 15px;
         text-align: center;
       }
+
+      .btn-shrinkray {
+        background-color: #39CFFF;
+        color: #ED4422;
+        font-weight: bold;
+      }
+
+      .container.shrinkray {
+        max-width: 500px;
+      }
+
+
+    .shrinkray .control-label {
+      margin-top: -2px;
+      padding-top: 0px;
+    }
+
     </style>
   </head>
 
   <body>
 
-    <div class="container">
+    <div class="container shrinkray">
       <div class="row">
         <center>
       <img src="/static/logo.png" style="margin: 5px; width: 95%; max-width: 500px; padding-bottom: 25px;">
@@ -83,7 +100,7 @@
           </div>
           <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-success">Shrink it!</button>
+            <button type="submit" class="btn btn-shrinkray">Shrink it!</button>
           </div>
           </div>
         </form>
