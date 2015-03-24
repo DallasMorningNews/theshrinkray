@@ -117,57 +117,7 @@ def zip_from_zip(file, sizes, quality=75):
 
 @app.route("/")
 def index():
-    return """
-<!doctype html>
-<html>
-<head>
- <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
-
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
-
-</head>
-<body>
-      <div class="container">
-          <!-- Navbar goes here -->
-          <div class="card-panel teal lighten-2">
-            Quick Dallas Morning News photo resizer
-        </div>
-
-    <!-- Page Layout here -->
-    <div class="row">
-
-      <div class="col s3">
-        <!-- Grey navigation panel -->
-      </div>
-
-      <div class="col s9">
-      <form action="/zip" method="post" enctype="multipart/form-data">
-        Minimum size:      <input type="text" name="minSize" value=300 /><br>
-        Maximum size:  <input type="text" name="maxSize" value=3000 /><br>
-        Steps:  <input type="text" name="sizeSteps" value=5 /><br>
-        Quality: <select class="browser-default" name="quality">
-            <option value="100">Uncompressed</option>
-            <option value="95">95%</option>
-            <option selected="true" value="75">75%</option>
-            <option value="60">60% (for Troy)</option>
-            <option value="50">50% (really?)</option>
-            </select><br>
-        File: <input type="file" name="photo" /><br>
-        <input type="submit" value="Start upload" /><br>
-      </form>      </div>
-
-    </div>
-
-
-
-
-
-      </div>
-</body>
-</html>
-"""
+    return send_file('static/index.html')
 
 @app.route("/zip", methods = ['POST',])
 def make_zip_file():
