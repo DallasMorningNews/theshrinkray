@@ -27,7 +27,7 @@ def image_sizes(min, max, steps):
         sizes.append(int(size))
     return sizes
 
-def zip_from_file(files, sizes, quality=75):
+def zip_from_image(files, sizes, quality=75):
     rand = ''.join(random.sample(string.letters, 15))
     os.mkdir(os.path.join(dir, 'temp',rand))
     file_path, file_name = os.path.split(file.filename)
@@ -61,7 +61,7 @@ def zip_from_zip(file, sizes, quality=75):
     rand = ''.join(random.sample(string.letters, 15))
     os.mkdir(os.path.join(dir, 'temp',rand))
 
-    
+
     file_path, file_name = os.path.split(file.filename)
     base, ext = os.path.splitext(file_name)
     image_name = "{}_{}{}".format(base, 'orig', ext)
@@ -121,24 +121,50 @@ def index():
 <!doctype html>
 <html>
 <head>
+ <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
+
 </head>
 <body>
-    <h1>Quick Dallas Morning News photo resizer</h1>
-    <p>
+      <div class="container">
+          <!-- Navbar goes here -->
+          <div class="card-panel teal lighten-2">
+            Quick Dallas Morning News photo resizer
+        </div>
+
+    <!-- Page Layout here -->
+    <div class="row">
+
+      <div class="col s3">
+        <!-- Grey navigation panel -->
+      </div>
+
+      <div class="col s9">
       <form action="/zip" method="post" enctype="multipart/form-data">
-        Minimum size:      <input type="text" name="minSize" /><br>
-        Maximum size:  <input type="text" name="maxSize" /><br>
-        Steps:  <input type="text" name="sizeSteps" /><br>
-        File: <input type="file" name="photo" /><br>
-        Quality: <select name="quality">
+        Minimum size:      <input type="text" name="minSize" value=300 /><br>
+        Maximum size:  <input type="text" name="maxSize" value=3000 /><br>
+        Steps:  <input type="text" name="sizeSteps" value=5 /><br>
+        Quality: <select class="browser-default" name="quality">
             <option value="100">Uncompressed</option>
             <option value="95">95%</option>
             <option selected="true" value="75">75%</option>
             <option value="60">60% (for Troy)</option>
             <option value="50">50% (really?)</option>
             </select><br>
+        File: <input type="file" name="photo" /><br>
         <input type="submit" value="Start upload" /><br>
-      </form>
+      </form>      </div>
+
+    </div>
+
+
+
+
+
+      </div>
 </body>
 </html>
 """
