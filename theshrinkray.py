@@ -27,7 +27,7 @@ def image_sizes(min, max, steps):
         sizes.append(int(size))
     return sizes
 
-def zip_from_image(files, sizes, quality=75):
+def zip_from_image(file, sizes, quality=75):
     rand = ''.join(random.sample(string.letters, 15))
     os.mkdir(os.path.join(dir, 'temp',rand))
     file_path, file_name = os.path.split(file.filename)

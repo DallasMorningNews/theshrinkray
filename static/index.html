@@ -37,23 +37,24 @@
     </div>
       <div class="row">
 
+
         <form action="/zip" method="post" enctype="multipart/form-data" class="form-horizontal">
           <div class="form-group">
           <label for="minSize" class="col-sm-2 control-label">Minimum Size</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="minSize" placeholder="Smallest size, in pixels">
+            <input type="text" class="form-control" name="minSize" placeholder="Smallest size, in pixels">
           </div>
           </div>
           <div class="form-group">
           <label for="maxSize" class="col-sm-2 control-label">Minimum Size</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="maxSize" placeholder="Largest size, in pixels">
+            <input type="text" class="form-control" name="maxSize" placeholder="Largest size, in pixels">
           </div>
           </div>
           <div class="form-group">
-          <label for="steps" class="col-sm-2 control-label">Steps</label>
+          <label for="sizeSteps" class="col-sm-2 control-label">Steps</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="steps" placeholder="How many images do you need?">
+            <input type="text" class="form-control" name="sizeSteps" placeholder="How many images do you need?">
           </div>
           </div>
           <div class="form-group">
@@ -68,21 +69,18 @@
               </select>
           </div>
           </div>
-
-
           <div class="form-group">
           <label for="photo" class="col-sm-2 control-label">Image file</label>
           <div class="col-sm-10">
             <input class="form-control" type="file" name="photo" />
           </div>
           </div>
-
-
           <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-success">Shrink it!</button>
           </div>
           </div>
+        </form>
 
 
 
@@ -98,10 +96,13 @@
     </div><!-- /.container -->
 
 
+
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- // <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
   </body>
 </html>
