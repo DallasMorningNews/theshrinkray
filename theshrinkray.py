@@ -132,6 +132,7 @@ def make_zip_file():
     return send_file(zipfile, as_attachment=True,
         attachment_filename=file_name)
 
+app.debug = False
 
 if __name__ == "__main__":
     app.debug = True

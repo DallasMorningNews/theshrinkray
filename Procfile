@@ -1,1 +1,1 @@
-web: gunicorn theshrinkray:app --log-file=-
+web: gunicorn app:app --log-file=-
