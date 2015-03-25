@@ -28,7 +28,7 @@
       .btn-shrinkray {
         color: #fff;
         background-color: #ED4422;
-        
+
       }
 
       .container.shrinkray {
@@ -127,5 +127,43 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- // <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
+    <script src="/static/jquery.playSound.js"></script>
+
+    <script>
+    $(document).ready(function() {
+
+      $(".btn-shrinkray").click( function () {
+        $.playSound('/static/aciddeathray')
+
+
+      })
+
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('src', 'http://www.uscis.gov/files/nativedocuments/Track%2093.mp3');
+        audioElement.setAttribute('autoplay', 'autoplay');
+        //audioElement.load()
+        $.get();
+        audioElement.addEventListener("load", function() {
+        audioElement.play();
+        }, true);
+
+
+
+
+        $('.play').click(function() {
+        audioElement.play();
+        });
+
+
+        $('.pause').click(function() {
+        audioElement.pause();
+        });
+
+
+
+    });
+    </script>
+
+
   </body>
 </html>

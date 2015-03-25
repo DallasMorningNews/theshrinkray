@@ -16,6 +16,10 @@ Current features:
 
 For future features/plans/requests please see the issues. The main ones under consideration for 2.0 are: batch resize on groups of images and conversion to a Flask blueprint so it can be used inside other programs.
 
+The raygun noise came from NoiseCollector on FreeSound. Thanks!
+
+http://www.freesound.org/people/NoiseCollector/sounds/24297/
+
 --
 
 &copy; copyright 2015 by The Dallas Morning News (@dallasnews)  
