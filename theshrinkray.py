@@ -32,12 +32,14 @@ def zip_from_image(file, sizes, quality=75):
     os.mkdir(os.path.join(dir, 'temp',rand))
     file_path, file_name = os.path.split(file.filename)
     base, ext = os.path.splitext(file_name)
+    base = base.lower()
+    ext = ext.lower()
     image_name = "{}_{}{}".format(base, 'orig', ext)
     image_path = os.path.join(dir, 'temp', rand, image_name)
     f = file.save(image_path)
     # secure_path = os.path.join(dir, 'temp', rand, secure_filename(file_name))
     # f = file.save(secure_path)
-    zip_name = "{}.zip".format(base)
+    zip_name = "{}.zip".format(base).lower()
     zip_path = os.path.join(dir, 'temp', rand, zip_name)
     image = Image.open(image_path)
     print image_path, zip_path
@@ -57,63 +59,63 @@ def zip_from_image(file, sizes, quality=75):
     return zip_path
 
 
-def zip_from_zip(file, sizes, quality=75):
-    rand = ''.join(random.sample(string.letters, 15))
-    os.mkdir(os.path.join(dir, 'temp',rand))
-
-
-    file_path, file_name = os.path.split(file.filename)
-    base, ext = os.path.splitext(file_name)
-    image_name = "{}_{}{}".format(base, 'orig', ext)
-    image_path = os.path.join(dir, 'temp', rand, image_name)
-    f = file.save(image_path)
-    # secure_path = os.path.join(dir, 'temp', rand, secure_filename(file_name))
-    # f = file.save(secure_path)
-    zip_name = "{}.zip".format(base)
-    zip_path = os.path.join(dir, 'temp', rand, zip_name)
-    image = Image.open(image_path)
-    print image_path, zip_path
-    # print zip_path
-    with ZipFile(zip_path, 'w') as zipfile:
-        zipfile.write(image_path, image_name)
-        os.remove(image_path)
-        for size in sizes:
-            image_name = "{}_{}{}".format(base, size, ext)
-            image_path = os.path.join(dir, 'temp', rand, image_name)
-            img = ResizeToFit(width=size, upscale=True).process(image)
-            img.save(image_path, progressive=True, exif="", optimize=True,
-                quality = quality, icc_profile=img.info.get('icc_profile'))
-            img.close()
-            zipfile.write(image_path, image_name)
-            os.remove(image_path)
-    return zip_path
-    # rand = ''.join(random.sample(string.letters, 15))
-    # os.mkdir(os.path.join(dir, 'temp',rand))
-    # file_path, file_name = os.path.split(file.filename)
-    # base, ext = os.path.splitext(file_name)
-    # image_name = "{}_{}{}".format(base, 'orig', ext)
-    # image_path = os.path.join(dir, 'temp', rand, image_name)
-    # f = file.save(image_path)
-    # # secure_path = os.path.join(dir, 'temp', rand, secure_filename(file_name))
-    # # f = file.save(secure_path)
-    # zip_name = "{}.zip".format(base)
-    # zip_path = os.path.join(dir, 'temp', rand, zip_name)
-    # image = Image.open(image_path)
-    # print image_path, zip_path
-    # # print zip_path
-    # with ZipFile(zip_path, 'w') as zipfile:
-    #     zipfile.write(image_path, image_name)
-    #     os.remove(image_path)
-    #     for size in sizes:
-    #         image_name = "{}_{}{}".format(base, size, ext)
-    #         image_path = os.path.join(dir, 'temp', rand, image_name)
-    #         img = ResizeToFit(width=size, upscale=True).process(image)
-    #         img.save(image_path, progressive=True, exif="", optimize=True, quality = 75)
-    #         img.close()
-    #         zipfile.write(image_path, image_name)
-    #         os.remove(image_path)
-    # return zip_path
-
+# def zip_from_zip(file, sizes, quality=75):
+#     rand = ''.join(random.sample(string.letters, 15))
+#     os.mkdir(os.path.join(dir, 'temp',rand))
+#
+#
+#     file_path, file_name = os.path.split(file.filename)
+#     base, ext = os.path.splitext(file_name)
+#     image_name = "{}_{}{}".format(base, 'orig', ext)
+#     image_path = os.path.join(dir, 'temp', rand, image_name)
+#     f = file.save(image_path)
+#     # secure_path = os.path.join(dir, 'temp', rand, secure_filename(file_name))
+#     # f = file.save(secure_path)
+#     zip_name = "{}.zip".format(base)
+#     zip_path = os.path.join(dir, 'temp', rand, zip_name)
+#     image = Image.open(image_path)
+#     print image_path, zip_path
+#     # print zip_path
+#     with ZipFile(zip_path, 'w') as zipfile:
+#         zipfile.write(image_path, image_name)
+#         os.remove(image_path)
+#         for size in sizes:
+#             image_name = "{}_{}{}".format(base, size, ext).lower()
+#             image_path = os.path.join(dir, 'temp', rand, image_name)
+#             img = ResizeToFit(width=size, upscale=True).process(image)
+#             img.save(image_path, progressive=True, exif="", optimize=True,
+#                 quality = quality, icc_profile=img.info.get('icc_profile'))
+#             img.close()
+#             zipfile.write(image_path, image_name)
+#             os.remove(image_path)
+#     return zip_path
+#     # rand = ''.join(random.sample(string.letters, 15))
+#     # os.mkdir(os.path.join(dir, 'temp',rand))
+#     # file_path, file_name = os.path.split(file.filename)
+#     # base, ext = os.path.splitext(file_name)
+#     # image_name = "{}_{}{}".format(base, 'orig', ext)
+#     # image_path = os.path.join(dir, 'temp', rand, image_name)
+#     # f = file.save(image_path)
+#     # # secure_path = os.path.join(dir, 'temp', rand, secure_filename(file_name))
+#     # # f = file.save(secure_path)
+#     # zip_name = "{}.zip".format(base)
+#     # zip_path = os.path.join(dir, 'temp', rand, zip_name)
+#     # image = Image.open(image_path)
+#     # print image_path, zip_path
+#     # # print zip_path
+#     # with ZipFile(zip_path, 'w') as zipfile:
+#     #     zipfile.write(image_path, image_name)
+#     #     os.remove(image_path)
+#     #     for size in sizes:
+#     #         image_name = "{}_{}{}".format(base, size, ext)
+#     #         image_path = os.path.join(dir, 'temp', rand, image_name)
+#     #         img = ResizeToFit(width=size, upscale=True).process(image)
+#     #         img.save(image_path, progressive=True, exif="", optimize=True, quality = 75)
+#     #         img.close()
+#     #         zipfile.write(image_path, image_name)
+#     #         os.remove(image_path)
+#     # return zip_path
+#
 
 @app.route("/")
 def index():
