@@ -27,7 +27,23 @@ def image_sizes(min, max, steps):
         sizes.append(int(size))
     return sizes
 
-def zip_from_image(file, sizes, quality=75):
+def img_src_formatter(info):
+	"""
+	Takes a  tuple ('name', width) and generates
+	the srclist item for a responsive image tag.
+	"""
+	return "{} {}w".format(info[0], info[1])
+
+
+def take_closest(num,collection):
+	"""
+	Thanks for the advice stack overflow:
+	http://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value
+	"""
+	return min(collection,key=lambda x:abs(x-num))
+
+
+def zip_from_image(file, sizes, quality=75, default_size=1600, alt_text="YOU MUST ENTER ALT TEXT", image_tag_path="images/"):
     rand = ''.join(random.sample(string.letters, 15))
     os.mkdir(os.path.join(dir, 'temp',rand))
     file_path, file_name = os.path.split(file.filename)
@@ -37,18 +53,16 @@ def zip_from_image(file, sizes, quality=75):
     image_name = "{}_{}{}".format(base, 'orig', ext)
     image_path = os.path.join(dir, 'temp', rand, image_name)
     f = file.save(image_path)
-    # secure_path = os.path.join(dir, 'temp', rand, secure_filename(file_name))
-    # f = file.save(secure_path)
     zip_name = "{}.zip".format(base).lower()
     zip_path = os.path.join(dir, 'temp', rand, zip_name)
     image = Image.open(image_path)
-    print image_path, zip_path
-    # print zip_path
+    img_srcset_tuples = []
     with ZipFile(zip_path, 'w') as zipfile:
         zipfile.write(image_path, image_name)
         os.remove(image_path)
         for size in sizes:
             image_name = "{}_{}{}".format(base, size, ext)
+            img_srcset_tuples.append(("{}{}".format(image_tag_path, image_name), size))
             image_path = os.path.join(dir, 'temp', rand, image_name)
             img = ResizeToFit(width=size, upscale=True).process(image)
             img.save(image_path, progressive=True, exif="", optimize=True,
@@ -56,66 +70,20 @@ def zip_from_image(file, sizes, quality=75):
             img.close()
             zipfile.write(image_path, image_name)
             os.remove(image_path)
+        # src_file = open(os.path.join(dir, 'temp', rand, 'img_tag.txt')
+		#  src_file.write('<img srcset="')
+        img_srcset_strings = map(img_src_formatter, img_srcset_tuples)
+        best_size = take_closest(default_size, sizes)
+        img_src_string = img_srcset_tuples[sizes.index(best_size)][0]
+        img_tag_html = '<img srcset="{}" src="{}" sizes="(min-width: 1px) 100vw" alt="{}">'.format(', '.join(img_srcset_strings), img_src_string, alt_text)
+        img_tag_html_file_name = os.path.join(dir, 'temp', rand, 'html.txt')
+        img_tag_html_file = open(img_tag_html_file_name, 'w')
+        img_tag_html_file.write(img_tag_html)
+        img_tag_html_file.close()
+        zipfile.write(img_tag_html_file_name, 'html.txt')
     return zip_path
 
 
-# def zip_from_zip(file, sizes, quality=75):
-#     rand = ''.join(random.sample(string.letters, 15))
-#     os.mkdir(os.path.join(dir, 'temp',rand))
-#
-#
-#     file_path, file_name = os.path.split(file.filename)
-#     base, ext = os.path.splitext(file_name)
-#     image_name = "{}_{}{}".format(base, 'orig', ext)
-#     image_path = os.path.join(dir, 'temp', rand, image_name)
-#     f = file.save(image_path)
-#     # secure_path = os.path.join(dir, 'temp', rand, secure_filename(file_name))
-#     # f = file.save(secure_path)
-#     zip_name = "{}.zip".format(base)
-#     zip_path = os.path.join(dir, 'temp', rand, zip_name)
-#     image = Image.open(image_path)
-#     print image_path, zip_path
-#     # print zip_path
-#     with ZipFile(zip_path, 'w') as zipfile:
-#         zipfile.write(image_path, image_name)
-#         os.remove(image_path)
-#         for size in sizes:
-#             image_name = "{}_{}{}".format(base, size, ext).lower()
-#             image_path = os.path.join(dir, 'temp', rand, image_name)
-#             img = ResizeToFit(width=size, upscale=True).process(image)
-#             img.save(image_path, progressive=True, exif="", optimize=True,
-#                 quality = quality, icc_profile=img.info.get('icc_profile'))
-#             img.close()
-#             zipfile.write(image_path, image_name)
-#             os.remove(image_path)
-#     return zip_path
-#     # rand = ''.join(random.sample(string.letters, 15))
-#     # os.mkdir(os.path.join(dir, 'temp',rand))
-#     # file_path, file_name = os.path.split(file.filename)
-#     # base, ext = os.path.splitext(file_name)
-#     # image_name = "{}_{}{}".format(base, 'orig', ext)
-#     # image_path = os.path.join(dir, 'temp', rand, image_name)
-#     # f = file.save(image_path)
-#     # # secure_path = os.path.join(dir, 'temp', rand, secure_filename(file_name))
-#     # # f = file.save(secure_path)
-#     # zip_name = "{}.zip".format(base)
-#     # zip_path = os.path.join(dir, 'temp', rand, zip_name)
-#     # image = Image.open(image_path)
-#     # print image_path, zip_path
-#     # # print zip_path
-#     # with ZipFile(zip_path, 'w') as zipfile:
-#     #     zipfile.write(image_path, image_name)
-#     #     os.remove(image_path)
-#     #     for size in sizes:
-#     #         image_name = "{}_{}{}".format(base, size, ext)
-#     #         image_path = os.path.join(dir, 'temp', rand, image_name)
-#     #         img = ResizeToFit(width=size, upscale=True).process(image)
-#     #         img.save(image_path, progressive=True, exif="", optimize=True, quality = 75)
-#     #         img.close()
-#     #         zipfile.write(image_path, image_name)
-#     #         os.remove(image_path)
-#     # return zip_path
-#
 
 @app.route("/")
 def index():
@@ -123,16 +91,25 @@ def index():
 
 @app.route("/zip", methods = ['POST',])
 def make_zip_file():
-    f = request.files['photo']
-    min_size = float(request.form['minSize'])
-    max_size = float(request.form['maxSize'])
-    size_steps = int(request.form['sizeSteps'])
-    quality = int(request.form['quality'])
-    sizes = image_sizes(min_size, max_size, size_steps)
-    zipfile = zip_from_image(f, sizes, quality=quality)
-    file_path, file_name = os.path.split(zipfile)
-    return send_file(zipfile, as_attachment=True,
-        attachment_filename=file_name)
+	print 1
+	f = request.file['photo']
+	print 2
+	min_size = float(request.form['minSize'])
+	print 3
+	max_size = float(request.form['maxSize'])
+	print 4
+	size_steps = int(request.form['sizeSteps'])
+	print 5
+	quality = int(request.form['quality'])
+	print 6
+	sizes = image_sizes(min_size, max_size, size_steps)
+	print 7
+	zipfile = zip_from_image(f, sizes, quality=quality)
+	print 8
+	file_path, file_name = os.path.split(zipfile)
+	print 9
+	return send_file(zipfile, as_attachment=True,
+		attachment_filename=file_name)
 
 app.debug = False
 
