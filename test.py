@@ -53,16 +53,11 @@ class ShrinkRayTestCase(unittest.TestCase):
     #     assert os.access(zipname, os.F_OK) is True
 
     def test_upload_file_returns_zip(self):
-    	"""
-    	Need to make this pass, but I guess I don't quite understand mock file uploading in
-    	Flask.
-    	"""
         img_file = get_image_file()
         img_io = io.BytesIO(img_file.read())
-        form = {'minSize': 100, 'maxSize':200, 'sizeSteps': 4, 'photo': (img_io, img_file.name)}
-        req = self.app.post('/zip', form)
         img_file.close()
-        print req.status_code
+        form = {'minSize': 100, 'maxSize':200, 'sizeSteps': 4,  'quality': 75, 'photo': (img_io, img_file.name)}
+        req = self.app.post('/zip', data=form)
         assert req.status_code == 200
 
     def test_main_link_returns_200(self):
