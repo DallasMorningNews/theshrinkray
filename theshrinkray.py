@@ -8,7 +8,8 @@ from zipfile import ZipFile
 import random, string
 from pprint import pprint
 from werkzeug import secure_filename
-
+import io
+import shutil
 
 app = Flask(__name__)
 
@@ -58,8 +59,8 @@ def zip_from_image(file, sizes, quality=75, default_size=1600, alt_text="YOU MUS
     image = Image.open(image_path)
     img_srcset_tuples = []
     with ZipFile(zip_path, 'w') as zipfile:
-        zipfile.write(image_path, image_name)
-        os.remove(image_path)
+    	zipfile.write(image_path, image_name)
+    	os.remove(image_path)
         for size in sizes:
             image_name = "{}_{}{}".format(base, size, ext)
             img_srcset_tuples.append(("{}{}".format(image_tag_path, image_name), size))
@@ -99,8 +100,11 @@ def make_zip_file():
 	sizes = image_sizes(min_size, max_size, size_steps)
 	zipfile = zip_from_image(f, sizes, quality=quality)
 	file_path, file_name = os.path.split(zipfile)
-	return send_file(zipfile, as_attachment=True,
-		attachment_filename=file_name)
+	bytes = ""
+	with open(zipfile, 'r') as zipr:
+		bytes = io.BytesIO(zipr.read())
+	shutil.rmtree(file_path)
+	return send_file(bytes, as_attachment=True,	attachment_filename=file_name)
 
 app.debug = False
 
