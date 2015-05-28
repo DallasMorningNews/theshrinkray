@@ -91,23 +91,14 @@ def index():
 
 @app.route("/zip", methods = ['POST',])
 def make_zip_file():
-	print 1
-	f = request.file['photo']
-	print 2
+	f = request.files['photo']
 	min_size = float(request.form['minSize'])
-	print 3
 	max_size = float(request.form['maxSize'])
-	print 4
 	size_steps = int(request.form['sizeSteps'])
-	print 5
 	quality = int(request.form['quality'])
-	print 6
 	sizes = image_sizes(min_size, max_size, size_steps)
-	print 7
 	zipfile = zip_from_image(f, sizes, quality=quality)
-	print 8
 	file_path, file_name = os.path.split(zipfile)
-	print 9
 	return send_file(zipfile, as_attachment=True,
 		attachment_filename=file_name)
 
