@@ -76,7 +76,7 @@ def zip_from_image(file, sizes, quality=75, default_size=1600, alt_text="YOU MUS
         img_srcset_strings = map(img_src_formatter, img_srcset_tuples)
         best_size = take_closest(default_size, sizes)
         img_src_string = img_srcset_tuples[sizes.index(best_size)][0]
-        img_tag_html = '<img srcset="{}" src="{}" sizes="(min-width: 1px) 100vw" alt="{}">'.format(', '.join(img_srcset_strings), img_src_string, alt_text)
+        img_tag_html = '<img srcset="{}" sizes="(min-width: 1px) 100vw, 100vw" src="{}" alt="{}">'.format(', '.join(img_srcset_strings), img_src_string, alt_text)
         img_tag_html_file_name = os.path.join(dir, 'temp', rand, 'html.txt')
         img_tag_html_file = open(img_tag_html_file_name, 'w')
         img_tag_html_file.write(img_tag_html)
@@ -98,6 +98,7 @@ def make_zip_file():
 	size_steps = int(request.form['sizeSteps'])
 	quality = int(request.form['quality'])
 	sizes = image_sizes(min_size, max_size, size_steps)
+	sizes.sort(reverse=True)
 	zipfile = zip_from_image(f, sizes, quality=quality)
 	file_path, file_name = os.path.split(zipfile)
 	bytes = ""

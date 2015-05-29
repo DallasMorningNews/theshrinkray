@@ -2,7 +2,7 @@ import os, shutil
 import theshrinkray
 import unittest
 import tempfile
-import json, io
+import json, six
 from PIL import Image
 
 
@@ -53,8 +53,12 @@ class ShrinkRayTestCase(unittest.TestCase):
     #     assert os.access(zipname, os.F_OK) is True
 
     def test_upload_file_returns_zip(self):
+    	"""
+		This attempts to open a zip file.
+		We're going to pretend that if this works, the stuff in it is probably OK.
+    	"""
         img_file = get_image_file()
-        img_io = io.BytesIO(img_file.read())
+        img_io = six.BytesIO(img_file.read())
         img_file.close()
         form = {'minSize': 100, 'maxSize':200, 'sizeSteps': 4,  'quality': 75, 'photo': (img_io, img_file.name)}
         req = self.app.post('/zip', data=form)
